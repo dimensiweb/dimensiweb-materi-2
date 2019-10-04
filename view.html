@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Daftar Gambar</title>
+    </head>
+    <body>
+        <section>
+            <div>
+                <table id="table">
+                    <tr id="tr">
+                        <td>#</td>
+                        <td>Nama</td>
+                        <td>Link</td>
+                    </tr>
+
+                    <tr>
+
+                    </tr>
+                </table>
+
+                <table>
+                    
+                </table>
+            </div>
+        </section>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyAtyNq-jpPAPWkOqPxfw-k0LdcKuX-jQYg",
+                authDomain: "materi-fb.firebaseapp.com",
+                databaseURL: "https://materi-fb.firebaseio.com",
+                projectId: "materi-fb",
+                storageBucket: "materi-fb.appspot.com",
+                messagingSenderId: "66417248213",
+                appId: "1:66417248213:web:525e42d5aef05913025f5c"
+            };
+
+            var firebase = firebase.initializeApp(firebaseConfig);
+
+            var database = firebase.database();
+            database.ref().once('child_added', function (snapshot) {
+                if (snapshot.exists()) {
+                    var content = '';
+                    var i = 1;
+                    snapshot.forEach(function (data) {
+                        var val = data.val();
+                        content += '<tr>';
+                        content += '<td>' + (i++) + '</td>';
+                        content += '<td>' + val.nama + '</td>';
+                        content += '<td><a href="' + val.url + '"><img src="'+val.url+'"></a></td>';
+                        content += '</tr>';
+                    });
+                    $('#table').append(content);
+                }
+            });
+            
+        </script>
+    </body>
+</html>
